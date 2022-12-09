@@ -1,0 +1,25 @@
+name: Schedule Blog post
+
+on:
+  schedule:
+    - cron: "00 16 9 DEC 2022"
+
+jobs:
+  schedule-and-merge:
+    runs-on: "ubuntu-latest"
+    steps:
+      # switch to the future-posts branch
+      - uses: actions/checkout@v2
+        with:
+          ref: future-posts
+
+      # merge future-posts branch into master
+      - uses: actions/merge@v1
+        with:
+          branch: master
+
+      # commit the change into master
+      - uses: actions/commit-changes@v1
+        with:
+          message: "chore: merge new article(s) into master"
+          branch: master
